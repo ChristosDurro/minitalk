@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 12:05:56 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/23 12:40:34 by cdurro           ###   ########.fr       */
+/*   Created: 2023/05/05 16:01:19 by cdurro            #+#    #+#             */
+/*   Updated: 2023/05/09 10:44:51 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-#define MINITALK_H
+#include"libft.h"
 
-#define _GNU_SOURCE
+char	*ft_strnstr(const char *big, const char *little, size_t len)
+{
+	size_t	i;
+	size_t	j;
 
-#include <signal.h>
-#include "libft/libft.h"
-
-#define SERVER_START "\033[32mServer PID: %d\033[0m\n"
-#define SERVER_IS_BUSY "\033[31mServer is busy now. Try again later!\n"
-#define ARGS_ERROR "\033[31mUsage: %s <server_pid> <message>\n"
-#define SUCCESS_MSG "\033[32mMessage received!\n"
-
-#endif
+	if (*little == '\0')
+		return ((char *)big);
+	i = 0;
+	while (*(big + i) && i < len)
+	{
+		j = 0;
+		while (*(big + i + j) && *(big + i + j) == *(little + j) && i + j < len)
+		{
+			if (*(little + j + 1) == '\0')
+				return ((char *)(big + i));
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}

@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 12:05:56 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/23 12:40:34 by cdurro           ###   ########.fr       */
+/*   Created: 2023/05/05 16:00:23 by cdurro            #+#    #+#             */
+/*   Updated: 2023/05/05 16:31:11 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-#define MINITALK_H
+#include"libft.h"
 
-#define _GNU_SOURCE
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
 
-#include <signal.h>
-#include "libft/libft.h"
-
-#define SERVER_START "\033[32mServer PID: %d\033[0m\n"
-#define SERVER_IS_BUSY "\033[31mServer is busy now. Try again later!\n"
-#define ARGS_ERROR "\033[31mUsage: %s <server_pid> <message>\n"
-#define SUCCESS_MSG "\033[32mMessage received!\n"
-
-#endif
+	if (n == 0)
+		return (0);
+	i = 0;
+	while ((s1[i] || s2[i]) && i < n)
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}

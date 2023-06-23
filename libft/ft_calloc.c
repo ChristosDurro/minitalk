@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 12:05:56 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/23 12:40:34 by cdurro           ###   ########.fr       */
+/*   Created: 2023/05/05 16:32:28 by cdurro            #+#    #+#             */
+/*   Updated: 2023/05/15 15:18:05 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-#define MINITALK_H
+#include"libft.h"
 
-#define _GNU_SOURCE
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*ptr;
+	size_t	result;
 
-#include <signal.h>
-#include "libft/libft.h"
-
-#define SERVER_START "\033[32mServer PID: %d\033[0m\n"
-#define SERVER_IS_BUSY "\033[31mServer is busy now. Try again later!\n"
-#define ARGS_ERROR "\033[31mUsage: %s <server_pid> <message>\n"
-#define SUCCESS_MSG "\033[32mMessage received!\n"
-
-#endif
+	result = size * nmemb;
+	if (nmemb && size != result / nmemb)
+		return (NULL);
+	ptr = (void *)malloc(result * sizeof(void));
+	if (ptr != NULL)
+		ft_memset(ptr, 0, result);
+	return (ptr);
+}

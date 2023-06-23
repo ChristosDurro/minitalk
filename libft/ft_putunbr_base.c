@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_putunbr_base.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 12:05:56 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/23 12:40:34 by cdurro           ###   ########.fr       */
+/*   Created: 2023/05/12 17:51:58 by cdurro            #+#    #+#             */
+/*   Updated: 2023/05/19 17:52:51 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-#define MINITALK_H
+#include "ft_printf.h"
 
-#define _GNU_SOURCE
+void	ft_putunbr_base(unsigned int nbr, char *base, t_print *print_struct)
+{
+	int	size_base;
+	int	nbr_final[100];
+	int	i;
 
-#include <signal.h>
-#include "libft/libft.h"
-
-#define SERVER_START "\033[32mServer PID: %d\033[0m\n"
-#define SERVER_IS_BUSY "\033[31mServer is busy now. Try again later!\n"
-#define ARGS_ERROR "\033[31mUsage: %s <server_pid> <message>\n"
-#define SUCCESS_MSG "\033[32mMessage received!\n"
-
-#endif
+	i = 0;
+	size_base = 0;
+	if (ft_check_base(base))
+	{
+		while (base[size_base])
+			size_base++;
+		while (nbr)
+		{
+			nbr_final[i] = nbr % size_base;
+			nbr = nbr / size_base;
+			i++;
+		}
+		while (--i >= 0)
+			ft_putchar(base[nbr_final[i]], print_struct);
+	}
+}

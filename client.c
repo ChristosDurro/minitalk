@@ -6,24 +6,24 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 11:54:42 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/22 15:39:00 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/23 12:28:19 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minitalk.h"
 
-void	handle_server_response(int signal)
+static void	handle_server_response(int signal)
 {
 	if (signal == SIGUSR2)
-		ft_printf("Message received!\n");
+		ft_printf(SUCCESS_MSG);
 	else
 	{
-		ft_printf("Server is busy now. Try again later!\n");
+		ft_printf(SERVER_IS_BUSY);
 		exit(1);
 	}
 }
 
-void	send_binary(int pid, char *str)
+static void	send_binary(int pid, char *str)
 {
 	int	i;
 
@@ -33,22 +33,16 @@ void	send_binary(int pid, char *str)
 		while (i < 8)
 		{
 			if (*str & (1 << i++))
-			{
-				if (kill(pid, SIGUSR1) == -1)
-					ft_printf("error s1\n");
-			}
+				kill(pid, SIGUSR1);
 			else
-			{
-				if (kill(pid, SIGUSR2) == -1)
-					ft_printf("error s2\n");				
-			}
+				kill(pid, SIGUSR2);
 			usleep(100);
 		}
 		str++;
 	}
 }
 
-void	send_null(int pid)
+static void	send_null(int pid)
 {
 	int	i;
 
@@ -63,22 +57,13 @@ void	send_null(int pid)
 int main(int argc, char **argv)
 {
 	int pid;
-	int i;
 	struct sigaction sa;
 
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_handler = &handle_server_response;
-	
-	if (sigaction(SIGUSR1, &sa, NULL) == -1)
-	{
-		ft_printf("Sigaction 1 error\n");
-		exit(1);
-	}
-	if (sigaction(SIGUSR2, &sa, NULL) == -1)
-	{
-		ft_printf("Sigaction 2 error\n");
-		exit(1);
-	}	
+
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	if (argc == 3)
 	{
 
@@ -89,7 +74,7 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		ft_printf("Usage: %s <server_pid> <message>\n", argv[0]);
+		ft_printf(ARGS_ERROR, argv[0]);
 		return 1;
     }
     return 0;

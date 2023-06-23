@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 12:05:56 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/23 12:40:34 by cdurro           ###   ########.fr       */
+/*   Created: 2023/05/09 17:44:01 by cdurro            #+#    #+#             */
+/*   Updated: 2023/05/10 17:02:04 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-#define MINITALK_H
+#include"libft.h"
 
-#define _GNU_SOURCE
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*next_node;
 
-#include <signal.h>
-#include "libft/libft.h"
-
-#define SERVER_START "\033[32mServer PID: %d\033[0m\n"
-#define SERVER_IS_BUSY "\033[31mServer is busy now. Try again later!\n"
-#define ARGS_ERROR "\033[31mUsage: %s <server_pid> <message>\n"
-#define SUCCESS_MSG "\033[32mMessage received!\n"
-
-#endif
+	while (*lst)
+	{
+		next_node = (*lst)->next;
+		del((*lst)->content);
+		free(*lst);
+		*lst = next_node;
+	}
+	*lst = NULL;
+}

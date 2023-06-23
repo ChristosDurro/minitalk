@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_check_base.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 12:05:56 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/23 12:40:34 by cdurro           ###   ########.fr       */
+/*   Created: 2023/05/15 10:50:23 by cdurro            #+#    #+#             */
+/*   Updated: 2023/05/15 11:55:51 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-#define MINITALK_H
+#include"ft_printf.h"
 
-#define _GNU_SOURCE
+int	ft_check_base(char *base)
+{
+	int	i;
+	int	z;
 
-#include <signal.h>
-#include "libft/libft.h"
-
-#define SERVER_START "\033[32mServer PID: %d\033[0m\n"
-#define SERVER_IS_BUSY "\033[31mServer is busy now. Try again later!\n"
-#define ARGS_ERROR "\033[31mUsage: %s <server_pid> <message>\n"
-#define SUCCESS_MSG "\033[32mMessage received!\n"
-
-#endif
+	i = 0;
+	z = 0;
+	if (base[0] == '\0' || base[1] == '\0')
+		return (0);
+	while (base[i])
+	{
+		z = i + 1;
+		if (base[i] == '+' || base[i] == '-')
+			return (0);
+		if (base[i] < 32 || base[i] > 126)
+			return (0);
+		while (base[z])
+		{
+			if (base[i] == base[z])
+				return (0);
+			z++;
+		}
+		i++;
+	}
+	return (1);
+}

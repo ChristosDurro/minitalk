@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_pointer_format.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 12:05:56 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/23 12:40:34 by cdurro           ###   ########.fr       */
+/*   Created: 2023/05/15 11:14:01 by cdurro            #+#    #+#             */
+/*   Updated: 2023/05/19 17:48:17 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-#define MINITALK_H
+#include"ft_printf.h"
 
-#define _GNU_SOURCE
+void	ft_pointer_format(va_list args, t_print *print_struct)
+{
+	unsigned long	u_converted;
 
-#include <signal.h>
-#include "libft/libft.h"
-
-#define SERVER_START "\033[32mServer PID: %d\033[0m\n"
-#define SERVER_IS_BUSY "\033[31mServer is busy now. Try again later!\n"
-#define ARGS_ERROR "\033[31mUsage: %s <server_pid> <message>\n"
-#define SUCCESS_MSG "\033[32mMessage received!\n"
-
-#endif
+	u_converted = va_arg(args, unsigned long);
+	if (u_converted == 0)
+		ft_putstr("(nil)", print_struct);
+	else
+	{
+		ft_putstr("0x", print_struct);
+		ft_putlnbr_base(u_converted, "0123456789abcdef", print_struct);
+	}
+}
